@@ -7,19 +7,53 @@
 <body>
     <div class="container">
         <h1>Hack Planner</h1>
-        <ul>
+        <ul class = "checklist-items">
             {% for item in items %}
             <li>
-                {{ item }}
-                <a href="/edit/{{loop.index}}">Edit</a>
-                <a href="/delete/{{loop.index}}">Delete</a>
+                {{ item[1] }}<!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Hack Planner App</title>
+                    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>Hack Planner</h1>
+                        <ul class = "checklist-items">
+                            {% for item in items %}
+                            <li>
+                                {{ item[1] }}
+                                <a href="/edit/{{ loop.index }}">Edit</a>
+                                <a href="/delete/{{ loop.index }}">Delete</a>
+                                <button onclick="setReminder('{{item[1]}}')">Remind</button>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <form class = "add-form" action="/add" method="post">
+                            <input type="text" name="item" placeholder="Enter item">
+                            <button type="submit">Add</button>
+                        </form>
+                    </div>
+                </body>
+                </html>
+                
+                <a href="/edit/{{ loop.index }}">Edit</a>
+                <a href="/delete/{{ loop.index }}">Delete</a>
             </li>
             {% endfor %}
         </ul>
-        <form class="add-form" action="/add" method="post">
+        <form class = "add-form" action="/add" method="post">
             <input type="text" name="item" placeholder="Enter item">
             <button type="submit">Add</button>
         </form>
     </div>
+
+    <script>
+        function setReminder(item) {
+            setTimeout(function() {
+                var reminder = confirm("Reminder: " + item);
+            }, 5 * 1000); // 5 seconds in milliseconds
+        }
+    </script>
 </body>
 </html>
